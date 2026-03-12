@@ -179,100 +179,191 @@ const App: React.FC = () => {
     }
   };
 
-  // Notice how the max-width is removed here to allow the modern design to breathe
   return (
-    <div style={{ padding: "40px", margin: "0 auto", backgroundColor: "#f9fafb", minHeight: "100vh" }}>
-      
-      {/* The modern Patient List with the integrated form */}
-      <PatientList 
-        patients={patients} 
-        onToggle={handleTogglePatient} 
-        onDelete={handleDeletePatient} 
-        onAddPatient={handleCreatePatient} 
-      />
+    <div className="min-h-screen bg-slate-950 bg-gradient-to-br from-slate-900 via-slate-950 to-slate-900 text-slate-100">
+      {/* Decorative background blobs */}
+      <div className="pointer-events-none fixed inset-0 overflow-hidden">
+        <div className="absolute -top-24 -left-16 h-64 w-64 rounded-full bg-blue-600/10 blur-3xl" />
+        <div className="absolute top-1/2 -right-16 h-72 w-72 rounded-full bg-emerald-500/10 blur-3xl" />
+        <div className="absolute -bottom-24 left-1/3 h-56 w-56 rounded-full bg-indigo-500/10 blur-3xl" />
+      </div>
 
-      {/* --- OLDER SECTIONS BELOW --- */}
-      <div style={{ maxWidth: "500px", margin: "40px auto 0" }}>
-        <h2>Doctor CRUD (TypeScript)</h2>
-        <div style={{ marginBottom: "20px" }}>
-          <input
-            type="text"
-            value={doctorName}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDoctorName(e.target.value)}
-            placeholder="Enter Doctor Name..."
-            style={{ marginRight: "10px" }}
-          />
-          <input
-            type="text"
-            value={doctorPhoneNumber}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDoctorPhoneNumber(e.target.value)}
-            placeholder="Enter Doctor Phone Number..."
-            style={{ marginRight: "10px" }}
-          />
-          <input
-            type="text"
-            value={doctorEmail}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDoctorEmail(e.target.value)}
-            placeholder="Enter Doctor Email..."
-            style={{ marginRight: "10px" }}
-          />
-          <button onClick={handleCreateDoctor}>Add Doctor</button>
+      <div className="relative max-w-6xl mx-auto px-4 py-10 space-y-10">
+        {/* Header */}
+        <header className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-white">
+              Clinic Management Dashboard
+            </h1>
+            <p className="mt-1 text-sm text-slate-300">
+              Manage patients, doctors, and appointments in one clean view.
+            </p>
+          </div>
+          <div className="inline-flex items-center gap-2 rounded-full border border-slate-700 bg-slate-900/80 px-4 py-2 shadow-lg shadow-slate-950/60">
+            <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+            <span className="text-xs font-medium text-slate-200">Connected to API</span>
+          </div>
+        </header>
+
+        {/* Main glass panel */}
+        <div className="rounded-3xl border border-slate-800 bg-slate-900/60 shadow-2xl shadow-black/50 backdrop-blur-xl p-4 sm:p-6 lg:p-8 space-y-10">
+          {/* Patient section */}
+          <section>
+            <PatientList
+              patients={patients}
+              onToggle={handleTogglePatient}
+              onDelete={handleDeletePatient}
+              onAddPatient={handleCreatePatient}
+            />
+          </section>
+
+          {/* Doctor + Appointment in two columns on large screens */}
+          <section className="grid gap-8 lg:grid-cols-2">
+            {/* Doctor CRUD + list */}
+            <div className="space-y-5">
+              <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                <h2 className="text-xl font-bold text-gray-800 mb-4">Doctor CRUD (TypeScript)</h2>
+                <div className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1.5 ml-1">
+                        Doctor Name
+                      </label>
+                      <input
+                        type="text"
+                        value={doctorName}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDoctorName(e.target.value)}
+                        placeholder="Enter Doctor Name..."
+                        className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-800 placeholder-gray-400 transition-all duration-200 ease-in-out focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:outline-none shadow-sm"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1.5 ml-1">
+                        Phone Number
+                      </label>
+                      <input
+                        type="text"
+                        value={doctorPhoneNumber}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDoctorPhoneNumber(e.target.value)}
+                        placeholder="Enter Doctor Phone Number..."
+                        className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-800 placeholder-gray-400 transition-all duration-200 ease-in-out focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:outline-none shadow-sm"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1.5 ml-1">
+                        Email Address
+                      </label>
+                      <input
+                        type="email"
+                        value={doctorEmail}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDoctorEmail(e.target.value)}
+                        placeholder="Enter Doctor Email..."
+                        className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-800 placeholder-gray-400 transition-all duration-200 ease-in-out focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:outline-none shadow-sm"
+                      />
+                    </div>
+                  </div>
+                  <div className="pt-1">
+                    <button
+                      onClick={handleCreateDoctor}
+                      className="w-full md:w-auto px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-xl transition-all duration-200 ease-in-out transform hover:-translate-y-0.5 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                    >
+                      Add Doctor
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <DoctorList doctor={doctors} onToggle={handleToggleDoctor} onDelete={handleDeleteDoctor} />
+            </div>
+
+            {/* Appointment CRUD + list */}
+            <div className="space-y-5">
+              <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                <h2 className="text-xl font-bold text-gray-800 mb-4">Appointment CRUD (TypeScript)</h2>
+                <div className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1.5 ml-1">
+                        Patient
+                      </label>
+                      <select
+                        value={appointmentPatient}
+                        onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setAppointmentPatient(e.target.value)}
+                        className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-800 transition-all duration-200 ease-in-out focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:outline-none shadow-sm"
+                      >
+                        <option value="">Select Patient</option>
+                        {patients.map((patient) => (
+                          <option key={patient.id} value={patient.id}>
+                            {patient.name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1.5 ml-1">
+                        Doctor
+                      </label>
+                      <select
+                        value={appointmentDoctor}
+                        onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setAppointmentDoctor(e.target.value)}
+                        className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-800 transition-all duration-200 ease-in-out focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:outline-none shadow-sm"
+                      >
+                        <option value="">Select Doctor</option>
+                        {doctors.map((doctor) => (
+                          <option key={doctor.id} value={doctor.id}>
+                            {doctor.name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1.5 ml-1">
+                        Date
+                      </label>
+                      <input
+                        type="date"
+                        value={appointmentDate}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setAppointmentDate(e.target.value)}
+                        className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-800 placeholder-gray-400 transition-all duration-200 ease-in-out focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:outline-none shadow-sm"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1.5 ml-1">
+                        Status
+                      </label>
+                      <select
+                        value={appointmentStatus}
+                        onChange={(e) => setAppointmentStatus(e.target.value)}
+                        className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-800 transition-all duration-200 ease-in-out focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:outline-none shadow-sm"
+                      >
+                        <option value="Pending">Pending</option>
+                        <option value="Done">Done</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div className="pt-1">
+                    <button
+                      onClick={handleCreateAppointment}
+                      className="w-full md:w-auto px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-xl transition-all duration-200 ease-in-out transform hover:-translate-y-0.5 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                    >
+                      Add Appointment
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <AppointmentList
+                appointments={appointments}
+                onToggle={handleToggleAppointment}
+                onDelete={handleDeleteAppointment}
+              />
+            </div>
+          </section>
         </div>
-
-        <DoctorList doctor={doctors} onToggle={handleToggleDoctor} onDelete={handleDeleteDoctor} />
-
-        <h2 style={{ marginTop: "40px" }}>Appointment CRUD (TypeScript)</h2>
-        <div style={{ marginBottom: "20px" }}>
-          {/* Patient Dropdown */}
-          <select
-            value={appointmentPatient}
-            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setAppointmentPatient(e.target.value)}
-            style={{ marginRight: "10px" }}
-          >
-            <option value="">Select Patient</option>
-            {patients.map((patient) => (
-              <option key={patient.id} value={patient.id}>
-                {patient.name}
-              </option>
-            ))}
-          </select>
-
-          {/* Doctor Dropdown */}
-          <select
-            value={appointmentDoctor}
-            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setAppointmentDoctor(e.target.value)}
-            style={{ marginRight: "10px" }}
-          >
-            <option value="">Select Doctor</option>
-            {doctors.map((doctor) => (
-              <option key={doctor.id} value={doctor.id}>
-                {doctor.name}
-              </option>
-            ))}
-          </select>
-
-          {/* Date Picker */}
-          <input
-            type="date"
-            value={appointmentDate}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setAppointmentDate(e.target.value)}
-            style={{ marginRight: "10px" }}
-          />
-
-          {/* Status Dropdown */}
-          <select
-            value={appointmentStatus}
-            onChange={(e) => setAppointmentStatus(e.target.value)}
-            style={{ marginRight: "10px" }}
-          >
-            <option value="Pending">Pending</option>
-            <option value="Done">Done</option>
-          </select>
-
-          <button onClick={handleCreateAppointment}>Add Appointment</button>
-        </div>
-
-        <AppointmentList appointments={appointments} onToggle={() => {}} onDelete={() => {}} />
       </div>
     </div>
   );

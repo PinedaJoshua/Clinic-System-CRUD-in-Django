@@ -133,7 +133,7 @@ const PatientList: React.FC<Props> = ({ patients, onToggle, onDelete, onAddPatie
         {patients.map((patient) => (
           <li
             key={patient.id}
-            className="bg-white shadow-sm border border-gray-100 rounded-2xl p-6 flex items-center justify-between transition-all hover:shadow-md"
+            className="bg-white/80 backdrop-blur-sm border border-gray-100 shadow-sm hover:shadow-lg transition-shadow rounded-2xl p-5 md:p-6 flex items-center justify-between"
           >
             {editingPatientID === patient.id ? (
               <div className="space-y-4 w-full">
